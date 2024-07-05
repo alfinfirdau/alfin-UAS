@@ -1,4 +1,4 @@
-package com.gofood
+package com.alpro
 
 import android.app.Application
 import com.facebook.react.PackageList
