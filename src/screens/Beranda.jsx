@@ -1,7 +1,20 @@
+// Beranda.js
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Beranda = () => {
+  const navigation = useNavigation();
+
+  const handleFoodItemClick = (foodName) => {
+    navigation.navigate('Notifikasi', {
+      notification: {
+        title: 'Item Clicked',
+        message: `Anda memilih ${foodName}`,
+      },
+    });
+  };
+
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
@@ -14,21 +27,19 @@ const Beranda = () => {
         <Text style={styles.sectionTitle}>Rekomendasi Makanan</Text>
 
         {/* Item Makanan */}
-        <View style={styles.foodItem}>
+        <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Es Jeruk Jumbo')}>
           <Image
             source={require('../assets/image/6.jpg')}
             style={styles.foodImage}
           />
           <View style={styles.foodDetails}>
             <Text style={styles.foodName}>Es Jeruk Jumbo</Text>
-            <Text style={styles.foodDescription}>
-              Jeruk,Gula,Es.
-            </Text>
+            <Text style={styles.foodDescription}>Jeruk, Gula, Es.</Text>
             <Text style={styles.foodPrice}>Rp 5.000</Text>
           </View>
-        </View>
-         {/* Item Makanan */}
-         <View style={styles.foodItem}>
+        </TouchableOpacity>
+          {/* Item Makanan */}
+          <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Es Teh Jumbo')}>
           <Image
             source={require('../assets/image/5.jpg')}
             style={styles.foodImage}
@@ -36,13 +47,14 @@ const Beranda = () => {
           <View style={styles.foodDetails}>
             <Text style={styles.foodName}>Es Teh Jumbo</Text>
             <Text style={styles.foodDescription}>
-              Es,Gula,Teh.
+              Es, Gula, Teh.
             </Text>
             <Text style={styles.foodPrice}>Rp 5.000</Text>
           </View>
-        </View>
-         {/* Item Makanan */}
-         <View style={styles.foodItem}>
+        </TouchableOpacity>
+        
+        {/* Item Makanan */}
+        <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Kerang Rebus')}>
           <Image
             source={require('../assets/image/4.jpg')}
             style={styles.foodImage}
@@ -50,13 +62,14 @@ const Beranda = () => {
           <View style={styles.foodDetails}>
             <Text style={styles.foodName}>Kerang Rebus</Text>
             <Text style={styles.foodDescription}>
-              Kerang,cocolan saos.
+              Kerang, cocolan saos.
             </Text>
             <Text style={styles.foodPrice}>Rp 15.000</Text>
           </View>
-        </View>
-         {/* Item Makanan */}
-         <View style={styles.foodItem}>
+        </TouchableOpacity>
+        
+        {/* Item Makanan */}
+        <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Cumi Bakar')}>
           <Image
             source={require('../assets/image/3.jpg')}
             style={styles.foodImage}
@@ -64,13 +77,14 @@ const Beranda = () => {
           <View style={styles.foodDetails}>
             <Text style={styles.foodName}>Cumi Bakar</Text>
             <Text style={styles.foodDescription}>
-              Cumi,kecap,jeruk nipis.
+              Cumi, kecap, jeruk nipis.
             </Text>
             <Text style={styles.foodPrice}>Rp 15.000</Text>
           </View>
-        </View>
-         {/* Item Makanan */}
-         <View style={styles.foodItem}>
+        </TouchableOpacity>
+        
+        {/* Item Makanan */}
+        <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Kepiting Asap')}>
           <Image
             source={require('../assets/image/2.jpg')}
             style={styles.foodImage}
@@ -78,27 +92,28 @@ const Beranda = () => {
           <View style={styles.foodDetails}>
             <Text style={styles.foodName}>Kepiting Asap</Text>
             <Text style={styles.foodDescription}>
-              Kepiting Besar,cabe ulek.
+              Kepiting Besar, cabe ulek.
             </Text>
             <Text style={styles.foodPrice}>Rp 25.000</Text>
           </View>
-        </View>
-         {/* Item Makanan */}
-         <View style={styles.foodItem}>
+        </TouchableOpacity>
+        
+        {/* Item Makanan */}
+        <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Lobster Jumbo')}>
           <Image
             source={require('../assets/image/1.jpg')}
             style={styles.foodImage}
           />
           <View style={styles.foodDetails}>
-            <Text style={styles.foodName}>LobsterJumbo</Text>
+            <Text style={styles.foodName}>Lobster Jumbo</Text>
             <Text style={styles.foodDescription}>
-              lobster,nasi,kerupu,cabe besar.
+              lobster, nasi, kerupuk, cabe besar.
             </Text>
             <Text style={styles.foodPrice}>Rp 25.000</Text>
           </View>
-        </View>
-        <View style={styles.foodItem}>
-          
+        </TouchableOpacity>
+             {/* Item Makanan */}
+             <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Nasi Goreng Special')}>
           <Image
             source={require('../assets/image/0.jpg')}
             style={styles.foodImage}
@@ -110,9 +125,9 @@ const Beranda = () => {
             </Text>
             <Text style={styles.foodPrice}>Rp 15.000</Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
-        {/* Tambahkan item makanan lainnya sesuai kebutuhan */}
+        {/* Repeat for other items */}
       </View>
 
       {/* Footer */}
