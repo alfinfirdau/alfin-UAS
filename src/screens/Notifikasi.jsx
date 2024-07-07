@@ -51,7 +51,7 @@ const Notifikasi = () => {
         </ScrollView>
       </SafeAreaView>
     </PaperProvider>
-  
+  );
 };
 
 const styles = StyleSheet.create({
