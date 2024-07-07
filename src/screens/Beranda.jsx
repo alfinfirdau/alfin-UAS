@@ -6,14 +6,24 @@ import { useNavigation } from '@react-navigation/native';
 const Beranda = () => {
   const navigation = useNavigation();
 
-  const handleFoodItemClick = (foodName) => {
+  const handleOrderClick = (foodName, foodPrice) => {
     navigation.navigate('Notifikasi', {
       notification: {
-        title: 'Item Clicked',
-        message: `Anda memilih ${foodName}`,
+        title: 'Pesanan Diterima',
+        message: `Anda telah memesan ${foodName} seharga ${foodPrice}.`,
       },
     });
   };
+
+  const foodItems = [
+    { name: 'Es Jeruk Jumbo', description: 'Jeruk, Gula, Es.', price: 'Rp 5.000', image: require('../assets/image/6.jpg') },
+    { name: 'Es Teh Jumbo', description: 'Es, Gula, Teh.', price: 'Rp 5.000', image: require('../assets/image/5.jpg') },
+    { name: 'Kerang Rebus', description: 'Kerang, cocolan saos.', price: 'Rp 15.000', image: require('../assets/image/4.jpg') },
+    { name: 'Cumi Bakar', description: 'Cumi, kecap, jeruk nipis.', price: 'Rp 15.000', image: require('../assets/image/3.jpg') },
+    { name: 'Kepiting Asap', description: 'Kepiting besar, cabai ulek.', price: 'Rp 25.000', image: require('../assets/image/2.jpg') },
+    { name: 'Lobster Jumbo', description: 'Lobster, nasi, kerupuk, cabe besar.', price: 'Rp 25.000', image: require('../assets/image/1.jpg') },
+    { name: 'Nasi Goreng Spesial', description: 'Nasi goreng dengan telur, ayam, dan acar.', price: 'Rp 15.000', image: require('../assets/image/0.jpg') },
+  ];
 
   return (
     <ScrollView style={styles.container}>
@@ -25,114 +35,25 @@ const Beranda = () => {
       {/* Daftar Makanan */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Rekomendasi Makanan</Text>
-
-        {/* Item Makanan */}
-        <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Es Jeruk Jumbo')}>
-          <Image
-            source={require('../assets/image/6.jpg')}
-            style={styles.foodImage}
-          />
-          <View style={styles.foodDetails}>
-            <Text style={styles.foodName}>Es Jeruk Jumbo</Text>
-            <Text style={styles.foodDescription}>Jeruk, Gula, Es.</Text>
-            <Text style={styles.foodPrice}>Rp 5.000</Text>
-          </View>
-        </TouchableOpacity>
-          {/* Item Makanan */}
-          <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Es Teh Jumbo')}>
-          <Image
-            source={require('../assets/image/5.jpg')}
-            style={styles.foodImage}
-          />
-          <View style={styles.foodDetails}>
-            <Text style={styles.foodName}>Es Teh Jumbo</Text>
-            <Text style={styles.foodDescription}>
-              Es, Gula, Teh.
-            </Text>
-            <Text style={styles.foodPrice}>Rp 5.000</Text>
-          </View>
-        </TouchableOpacity>
-        
-        {/* Item Makanan */}
-        <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Kerang Rebus')}>
-          <Image
-            source={require('../assets/image/4.jpg')}
-            style={styles.foodImage}
-          />
-          <View style={styles.foodDetails}>
-            <Text style={styles.foodName}>Kerang Rebus</Text>
-            <Text style={styles.foodDescription}>
-              Kerang, cocolan saos.
-            </Text>
-            <Text style={styles.foodPrice}>Rp 15.000</Text>
-          </View>
-        </TouchableOpacity>
-        
-        {/* Item Makanan */}
-        <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Cumi Bakar')}>
-          <Image
-            source={require('../assets/image/3.jpg')}
-            style={styles.foodImage}
-          />
-          <View style={styles.foodDetails}>
-            <Text style={styles.foodName}>Cumi Bakar</Text>
-            <Text style={styles.foodDescription}>
-              Cumi, kecap, jeruk nipis.
-            </Text>
-            <Text style={styles.foodPrice}>Rp 15.000</Text>
-          </View>
-        </TouchableOpacity>
-        
-        {/* Item Makanan */}
-        <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Kepiting Asap')}>
-          <Image
-            source={require('../assets/image/2.jpg')}
-            style={styles.foodImage}
-          />
-          <View style={styles.foodDetails}>
-            <Text style={styles.foodName}>Kepiting Asap</Text>
-            <Text style={styles.foodDescription}>
-              Kepiting Besar, cabe ulek.
-            </Text>
-            <Text style={styles.foodPrice}>Rp 25.000</Text>
-          </View>
-        </TouchableOpacity>
-        
-        {/* Item Makanan */}
-        <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Lobster Jumbo')}>
-          <Image
-            source={require('../assets/image/1.jpg')}
-            style={styles.foodImage}
-          />
-          <View style={styles.foodDetails}>
-            <Text style={styles.foodName}>Lobster Jumbo</Text>
-            <Text style={styles.foodDescription}>
-              lobster, nasi, kerupuk, cabe besar.
-            </Text>
-            <Text style={styles.foodPrice}>Rp 25.000</Text>
-          </View>
-        </TouchableOpacity>
-             {/* Item Makanan */}
-             <TouchableOpacity style={styles.foodItem} onPress={() => handleFoodItemClick('Nasi Goreng Special')}>
-          <Image
-            source={require('../assets/image/0.jpg')}
-            style={styles.foodImage}
-          />
-          <View style={styles.foodDetails}>
-            <Text style={styles.foodName}>Nasi Goreng Special</Text>
-            <Text style={styles.foodDescription}>
-              Nasi goreng dengan telur, ayam, dan acar.
-            </Text>
-            <Text style={styles.foodPrice}>Rp 15.000</Text>
-          </View>
-        </TouchableOpacity>
-
-        {/* Repeat for other items */}
+        {foodItems.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.foodItem}
+            onPress={() => handleOrderClick(item.name, item.price)}
+          >
+            <Image source={item.image} style={styles.foodImage} />
+            <View style={styles.foodDetails}>
+              <Text style={styles.foodName}>{item.name}</Text>
+              <Text style={styles.foodDescription}>{item.description}</Text>
+              <Text style={styles.foodPrice}>{item.price}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
       </View>
 
       {/* Footer */}
       <View style={styles.footer}>
-        <Text style={styles.footerText}>© 2024 GoFood. All rights reserved.</Text>
+        <Text style={styles.footerText}>© 2024 GoFood. Semua hak dilindungi undang-undang.</Text>
       </View>
     </ScrollView>
   );
@@ -151,6 +72,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: 'white',
   },
   section: {
     marginBottom: 20,
@@ -159,6 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: 'white',
   },
   foodItem: {
     flexDirection: 'row',
@@ -180,6 +103,7 @@ const styles = StyleSheet.create({
   foodName: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'white',
   },
   foodDescription: {
     fontSize: 14,
