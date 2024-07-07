@@ -126,5 +126,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666666',
   },
+});
 
 export default Beranda;
