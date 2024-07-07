@@ -1,16 +1,32 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+// Beranda.js
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Button, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const Beranda = () => {
   const navigation = useNavigation();
+  const [quantities, setQuantities] = useState({});
 
-  const handleOrderClick = (foodName, foodPrice) => {
-    navigation.navigate('Notifikasi', {
-      notification: {
-        title: 'Pesanan Diterima',
-        message: `Anda telah memesan ${foodName} seharga ${foodPrice}.`,
-      },
+  const handleOrderClick = (foodName, foodPrice, quantity) => {
+    if (quantity > 0) {
+      const priceNumber = parseInt(foodPrice.replace('Rp ', '').replace('.', '').replace(',', ''));
+      const totalPrice = priceNumber * quantity;
+
+      navigation.navigate('Notifikasi', {
+        notification: {
+          title: 'Pesanan Diterima',
+          message: `Anda telah memesan ${quantity} ${foodName} dengan total harga Rp ${totalPrice.toLocaleString()}.`,
+        },
+      });
+    } else {
+      Alert.alert('Jumlah pesanan tidak valid', 'Jumlah pesanan harus lebih dari 0.');
+    }
+  };
+
+  const updateQuantity = (name, quantity) => {
+    setQuantities({
+      ...quantities,
+      [name]: quantity,
     });
   };
 
@@ -35,18 +51,21 @@ const Beranda = () => {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Rekomendasi Makanan</Text>
         {foodItems.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.foodItem}
-            onPress={() => handleOrderClick(item.name, item.price)}
-          >
-            <Image source={item.image} style={styles.foodImage} />
+          <View key={index} style={styles.foodItem}>
+            <TouchableOpacity onPress={() => handleOrderClick(item.name, item.price, quantities[item.name] || 1)}>
+              <Image source={item.image} style={styles.foodImage} />
+            </TouchableOpacity>
             <View style={styles.foodDetails}>
               <Text style={styles.foodName}>{item.name}</Text>
               <Text style={styles.foodDescription}>{item.description}</Text>
               <Text style={styles.foodPrice}>{item.price}</Text>
+              <View style={styles.quantityContainer}>
+                <Button title="-" onPress={() => updateQuantity(item.name, Math.max((quantities[item.name] || 1) - 1, 1))} />
+                <Text style={styles.quantityText}>{quantities[item.name] || 1}</Text>
+                <Button title="+" onPress={() => updateQuantity(item.name, (quantities[item.name] || 1) + 1)} />
+              </View>
             </View>
-          </TouchableOpacity>
+          </View>
         ))}
       </View>
 
@@ -113,6 +132,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#008000',
+  },
+  quantityContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  quantityText: {
+    marginHorizontal: 10,
+    fontSize: 18,
+    color: 'white',
   },
   footer: {
     borderTopWidth: 1,

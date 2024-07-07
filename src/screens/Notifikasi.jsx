@@ -1,6 +1,5 @@
-// Notifikasi.js
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { Provider as PaperProvider, Card, Text, IconButton } from 'react-native-paper';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
@@ -23,6 +22,9 @@ const Notifikasi = () => {
     setNotifications(notifications.filter((notification) => notification.id !== id));
   };
 
+  // Debugging: log notifications
+  console.log("Notifications:", notifications);
+
   return (
     <PaperProvider>
       <SafeAreaView style={styles.container}>
@@ -30,23 +32,28 @@ const Notifikasi = () => {
           {notifications.length === 0 ? (
             <Text style={styles.noNotification}>No notifications</Text>
           ) : (
-            notifications.map((notification) => (
-              <Card key={notification.id} style={styles.card}>
-                <Card.Title
-                  title={notification.title}
-                  right={(props) => (
-                    <IconButton
-                      {...props}
-                      icon="close"
-                      onPress={() => dismissNotification(notification.id)}
-                    />
-                  )}
-                />
-                <Card.Content>
-                  <Text>{notification.message}</Text>
-                </Card.Content>
-              </Card>
-            ))
+            notifications.map((notification) => {
+              // Debugging: log each notification's id
+              console.log("Rendering notification with id:", notification.id);
+
+              return (
+                <Card key={notification.id} style={styles.card}>
+                  <Card.Title
+                    title={notification.title}
+                    right={(props) => (
+                      <IconButton
+                        {...props}
+                        icon="close"
+                        onPress={() => dismissNotification(notification.id)}
+                      />
+                    )}
+                  />
+                  <Card.Content>
+                    <Text>{notification.message}</Text>
+                  </Card.Content>
+                </Card>
+              );
+            })
           )}
         </ScrollView>
       </SafeAreaView>
